@@ -1,0 +1,47 @@
+
+1, fun3 is compiled into the assembly code shown
+
+2, fun6 is compiled into the assembly code shown
+
+3, int loop(int x, int y){
+     int i;
+     int r = 1;
+     for (i=x; i>y; i--){
+       r = r + i;
+     }
+   }
+
+4, func7: choice4
+   func8: choice2
+   func9: choice6
+
+5, void shift(int *p, int n){
+     int i;
+     int *q = p;
+     for (i=0; i!=n-1; i++){
+       *q = *(q+4);
+       q = q+4;
+     }
+   }
+
+6, 
+blocks = 0x4680
+  ptr = 0x4680
+  temp: only the type is declared, does not have value yet 
+
+  temp = 'A'
+  temp = 'P'
+  temp = 'E'
+  temp = 'A'
+
+  ptr = 0x4682
+  temp = 'P'
+  temp = 'E'
+
+  ptr = 0x4680
+  ptr = 0x4681, temp = 'E'
+  ptr = 0x4681, temp = 'F'
+  ptr = 0x4682, temp = 'F'
+  temp = 'P'
+
+
