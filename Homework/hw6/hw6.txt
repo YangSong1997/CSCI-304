@@ -1,0 +1,63 @@
+1,
+First 32 bytes:
+|---+---+---+---+---+---+---+---||---+---+---+---+---+---+---+---||---+---+---+---+---+---+---+---||---+---+---+---+---+---+---+---||
+|value          |c  |-----------||*left                          ||d  |---|flag   |---------------||*right                         ||
+|0              |4  |-----------||8                              ||16 |---|18     |---------------||24                             ||
+
+Second 32 bytes:
+|---+---+---+---+---+---+---+---||---+---+---+---+---+---+---+---||---+---+---+---+---+---+---+---||---+---+---+---+---+---+---+---||
+|unit   |-----------------------||*next                          ||-------------------------------||-------------------------------||
+|32     |-----------------------||40                             ||-------------------------------||-------------------------------||
+
+  (1)  B      NodeTree[i]->right->left->next
+
+  (2)  D      NodeTree[i]->left->right->next
+
+  (3)  F      NodeTree[i]->next->right->left
+
+2,
+5678 1234 a987
+44434241 fedc0045
+c3d4a1b2 1728e5f6
+
+3,
+Number of sets in cache: S = C/(B*E)
+Number of index bits in address: s = log_2 (S)= log_2 (C/(B*E))
+Number of bits for a tag: t = m-s-b = m - log_2 (C/(B*E)) - b
+
+4,
+a, direct mapped cache. 15 index bits means 2^{15} lines. 2 block offset bits means 2^2 block size. The total size of cache is 2^{15} * 2^2 = 2^{17} bytes. Every 32 byte integer takes 4 bytes. 2^{17} / 4 = 2^{15} integers can be stored.
+b, m=16
+i, S=32=2^s, s=5
+   B=4=2^b,  b=2
+   t = m-s-b = 16-5-2 = 9
+ii, S=16=2^s, s=4
+    B=16=2^b, b=4
+    t = m-s-b = 16-4-4 = 8
+iii, 1kb = 1024bytes
+     1024bytes/8bytes = 128lines = S = 2^s, s=7
+     B=8=2^b, b=3
+     t = m-s-b = 16-7-3 = 6
+c, 64 bit address = m
+   128byte cache
+   8 byte block = B = 2^b, b=3
+   128/8 = 16lines = S = 2^s, s=4
+   t = m-s-b = 64-4-3 = 57
+   Write back cache in each line: 1 valid bit, 1 dirty bit, 57 tag bits, 64 block bits(8bytes=64bits). 
+   Total bits: 1+1+57+64 = 123bits
+   data bits : total bits = 64:123
+   Write through cache in each line: 1 valid bit, 57 tag bits, 64 block bits(8bytes=64bits). 
+   Total bits: 1+57+64 = 122bits
+   data bits : total bits = 32:61
+
+5, 32 byte blocks and holds 1024 bytes of data. (32 lines, each line holding 8 integers. cache can hold 256 integers)
+i, miss rate for this one will be only one case 100%. Reason is that every time a new element is cached, it goes to the exact spot where the previous element is located, so every time it is a miss.
+ii, there can be two cases for this one. In the cache, every next element will go one grid before the previous element. The first case is that every element is mapped to the same line. Every access will be a miss since every time we go through, the numbers do not match. So in this case the miss rate is 100%. The second case is that elements are not mapped onto the same line. In the first loop, all the accesses will be misses, and starting from the second loop, the "turning point" grid will be hits while others are misses. So in this case the miss rate is roughly 80%.
+
+6,
+L2 miss penalty = L3 hit time + L3 miss rate * L3 miss penalty = L3 hit time + L3 miss rate * memory access time = 20cycles + 5% * 100cycles = 25cycles
+L1 miss penalty = L2 hit time + L2 miss rate * L2 miss penalty = 4cycles + 10% * 25cycles = 6.5cycles
+AMAT = L1 hit time + L1 miss rate * L1 miss penalty = 1cycle + 20% * 6.5cycles = 2.3cycles
+
+
+ 
