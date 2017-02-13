@@ -1,0 +1,24 @@
+2.
+(a) It just copies whatever is in %rax: 0x0000000008048a37
+(b) Copies the number stored at address 0x08048a6b, it is: 0xec833b75c08510c4
+(c) Directly copies the value 0x08048a6b
+(d) 0x2a + 0x8048a37 = 0x8048a61. Number stored at this address is: 0x04a884a3fffffe73
+(e) 0x17 + 0x8048a37 + 0x30 = 0x8048a7e. Number stored at this address is: 0x2404c7fffffdc5e8
+(f) It just copies whatever is in %rax: 0x0000000008048a37
+(g) 0xffffb29c + 0x6e2d975 + 0xc8a5b9c = 0x1136ce7ad is the value
+(h) 2 * 0x6e2d975 = 0xdc5b2ea is the value
+(i) 0x8048a37 + 4*0xc8a5b9c = 0x3a2df8a7 is the value
+(j) 219 = 13*16 + 11*1, 0xdb + 0x8048a37 + 8*0x30 = 0x8048c92 is the value
+
+3.
+test:
+    cmpq    %rsi , %rdi
+    jle     .L4
+    movq    %rdi , %rax
+    subq    %rsi , %rax
+    salq    $1   , %rax
+    ret
+.L4
+    movq    %rsi , %rax
+    addq    %rdi , %rax
+    ret
