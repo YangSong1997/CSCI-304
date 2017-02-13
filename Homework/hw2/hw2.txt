@@ -1,0 +1,50 @@
+Floating point:
+(1) 213 = 128 + 64 + 16 + 4 + 1 = 2^7 + 2^6 + 2^4 + 2^2 + 2^0
+    and is 1101 0101 in binary form. 
+    Thus -213 = - 1101 0101 = - 1.1010101 * 2^7
+    S = 1, EXP = 127 + 7= 128 + 4 + 2 = 1000 0110, SIG = 10101010000.....
+    Thus the floating point representation is:
+    1100 0011 0101 0101 0000 0000 0000 0000
+(2) a) 0x00000000 represents 0
+    b) 0xBF800000: 1011 1111 1000 0000 0000 0000 0000 0000
+       S = 1, EXP = 0111 1111 = 127, SIG = 000000000.......
+       - 1.0000000.... * 2^(127-127) = -1
+    c) 0x44802000: 01000100100000000010000000000000
+       S = 0, EXP = 128 + 8 + 1 = 137, SIG = 000000000100000...
+       1.0000000001 * 2^(137 - 127) = 10000000001 = 2^10 + 2^0 = 1025
+
+Values of j and j:
+main(){
+int i, j, *p, *q;
+// The following line means i=5; j=i;
+j=(i=5);
+// The following line means the logical value of i==4 will be assigned to j. That is, if i is equal to 4, then j=1; otherwise j=0; 
+j=(i==4); i=5 j=0
+j=++i; i=6 j=6
+j=i--; i=5 j=6
+p=&i; i=5 j=6
+q=&j; i=5 j=6
+*p=3; i=3 j=6
+*q=*p+1; i=3 j=4
+i=8; i=8 j=4
+j=9; i=8 j=9
+(*p)++; i=9 j=9
+(*q)++; i=9 j=10
+q=p; i=9 j=10
+(*q)--; i=8 j=10
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
